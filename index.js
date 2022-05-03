@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 // console.log(process.argv); //npm run start  --web-48 web-49 web-50
 
 // const cohort1 = process.argv[2];
@@ -13,7 +15,10 @@
 
 const express = require("express");
 const app = express();
-require("dotenv").config();
+
+app.get("/", (req, res) => {
+  res.send(`<h1>Hello im working!</h1>`);
+});
 
 app.get("/hello", (req, res) => {
   res.json({ message: "hey there" });
