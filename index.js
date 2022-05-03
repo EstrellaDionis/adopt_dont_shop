@@ -10,3 +10,15 @@ if (cohort1 === "web-49") {
 }
 
 console.log(`the display is ${display}`);
+
+const express = require("express");
+const app = express();
+
+app.get("/hello", (req, res) => {
+  res.json({ message: "hey there" });
+});
+
+const port = 9000;
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
