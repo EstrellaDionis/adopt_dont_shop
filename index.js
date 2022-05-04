@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 
 // console.log(process.argv); //npm run start  --web-48 web-49 web-50
 
@@ -16,8 +17,12 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "client/build")));
+// .static takes absolute path to 'build' folder
+
 app.get("/", (req, res) => {
-  res.send(`<h1>Hello im working!</h1>`);
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 app.get("/hello", (req, res) => {
