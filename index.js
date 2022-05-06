@@ -45,6 +45,15 @@ app.get("/pets", (req, res) => {
   });
 });
 
+app.get("/edit/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM pets WHERE pet_id = ?";
+  db.get(sql, id, (err, row) => {
+    // if (err) ...
+    res.render("edit", { model: row });
+  });
+});
+
 const port = process.env.PORT || 9000; //heroku wants to set its own port
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
