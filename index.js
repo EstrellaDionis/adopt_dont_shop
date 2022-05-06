@@ -49,7 +49,9 @@ app.get("/edit/:id", (req, res) => {
   const id = req.params.id;
   const sql = "SELECT * FROM pets WHERE pet_id = ?";
   db.get(sql, id, (err, row) => {
-    // if (err) ...
+    if (err) {
+      return console.error(err.message);
+    }
     res.render("edit", { model: row });
   });
 });
