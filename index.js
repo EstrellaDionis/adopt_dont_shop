@@ -36,7 +36,7 @@ app.get("/data", (req, res) => {
 });
 
 app.get("/pets", (req, res) => {
-  const sql = "SELECT * FROM pets ORDER BY name";
+  const sql = "SELECT * FROM pets ORDER BY pet_id";
   db.all(sql, [], (err, rows) => {
     if (err) {
       return console.error(err.message);

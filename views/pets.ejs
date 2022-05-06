@@ -1,14 +1,40 @@
 <%- include("header") -%>
 
-<h1>List of books</h1>
+<h1>Number of Pets (<%= model.length %>)</h1>
 
-<ul>
-  <% for (const pets of model) { %>
-  <li>
-    <%= pets.name %>
-    <em>(<%= pets.description %>)</em>
-  </li>
-  <% } %>
-</ul>
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Comments</th>
+        <th class="d-print-none">
+          <a class="btn btn-sm btn-success" href="/create">Add</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const pet of model) { %>
+      <tr>
+        <td><%= pet.name %></td>
+        <td><%= pet.type %></td>
+        <td><%= pet.breed %></td>
+        <td><%= pet.age %></td>
+        <td><%= pet.description %></td>
+        <td><%= pet.adopted %></td>
+        <td class="d-print-none">
+          <a class="btn btn-sm btn-warning" href="/edit/<%= pet.pet_id %>"
+            >Edit</a
+          >
+          <a class="btn btn-sm btn-danger" href="/delete/<%= pet.pet_id %>"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
 
 <%- include("footer") -%>
