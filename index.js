@@ -10,6 +10,8 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+app.use(express.urlencoded({ extended: true }));
+
 //connection to SQlite DB
 const db_name = path.join(__dirname, "data", "pets.db3");
 const db = new sqlite3.Database(db_name, (err) => {
@@ -53,6 +55,28 @@ app.get("/edit/:id", (req, res) => {
       return console.error(err.message);
     }
     res.render("edit", { model: row });
+  });
+});
+
+app.get("/create", (req, res) => {
+  res.render("create", { model: {} });
+});
+
+app.post("/create", (req, res) => {
+  const sql =
+    "INSERT INTO pets (name, type, breed, age, description, adopted) VALUES (?, ?, ?, ?, ?, ?)";
+  const pet = [
+    req.body.name,
+    req.body.type,
+    req.body.age,
+    req.body.description,
+    req.body.adopted,
+  ];
+  db.run(sql, pet, (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect("/pets");
   });
 });
 
