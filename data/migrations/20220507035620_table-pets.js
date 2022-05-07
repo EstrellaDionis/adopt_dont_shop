@@ -6,7 +6,7 @@ exports.up = async function (knex) {
     table.text("breed", 64).notNullable();
     table.integer("age");
     table.text("description");
-    table.boolean("adopted").notNullable();
+    table.boolean("adopted");
   });
 };
 
