@@ -80,6 +80,28 @@ app.post("/create", (req, res) => {
   });
 });
 
+app.post("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM pets WHERE pet_id = ?";
+  db.run(sql, id, (err) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.redirect("/pets");
+  });
+});
+
+app.get("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM pets WHERE pet_id = ?";
+  db.get(sql, id, (err, row) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render("delete", { model: row });
+  });
+});
+
 const port = process.env.PORT || 9000; //heroku wants to set its own port
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
