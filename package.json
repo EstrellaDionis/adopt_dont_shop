@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "heroku-postbuild": "cd client && npm i && npm run build",
     "up": "knex migrate:up",
     "down": "knex migrate:down",
     "latest": "knex migrate:latest",

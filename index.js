@@ -11,6 +11,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 //connection to SQlite DB
 const db_name = path.join(__dirname, "data", "pets.db3");
@@ -29,17 +30,17 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
-app.get("/data", (req, res) => {
-  const test = {
-    titre: "Test",
-    items: ["one", "two", "three"],
-  };
-  res.render("data", { model: test });
-});
+// app.get("/data", (req, res) => {
+//   const test = {
+//     titre: "Test",
+//     items: ["one", "two", "three"],
+//   };
+//   res.render("data", { model: test });
+// });
 
-app.get("/pets", (req, res) => {
+app.get("/pets", async (req, res) => {
   const sql = "SELECT * FROM pets ORDER BY pet_id";
-  db.all(sql, [], (err, rows) => {
+  await db.all(sql, [], (err, rows) => {
     if (err) {
       return console.error(err.message);
     }
@@ -62,7 +63,7 @@ app.get("/create", (req, res) => {
   res.render("create", { model: {} });
 });
 
-app.post("/create", (req, res) => {
+app.post("/create", async (req, res) => {
   const sql =
     "INSERT INTO pets (name, type, breed, age, description, adopted) VALUES (?, ?, ?, ?, ?, ?)";
   const pet = [
@@ -72,7 +73,7 @@ app.post("/create", (req, res) => {
     req.body.description,
     req.body.adopted,
   ];
-  db.run(sql, pet, (err) => {
+  await db.run(sql, pet, (err) => {
     if (err) {
       return console.error(err.message);
     }
